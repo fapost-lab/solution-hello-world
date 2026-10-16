@@ -1,10 +1,11 @@
 // Writes dist/fapost-ui.json next to the files `vite build` has just emitted.
 // Temporary, like vite.config.js: the Vite preset will do this itself.
-import { readdirSync, writeFileSync } from 'node:fs'
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const dist = join(dirname(fileURLToPath(import.meta.url)), '..', 'dist')
+const root = join(dirname(fileURLToPath(import.meta.url)), '..')
+const dist = join(root, 'dist')
 const assets = readdirSync(join(dist, 'assets')).sort()
 
 const only = (pattern) => {
@@ -17,12 +18,20 @@ const only = (pattern) => {
     return `assets/${found[0]}`
 }
 
+// The ranges the bundle was built against, from the installed packages: `^<major>.<minor>` of each.
+const builtAgainst = (name) => {
+    const { version } = JSON.parse(readFileSync(join(root, 'node_modules', name, 'package.json'), 'utf8'))
+    const [major, minor] = version.split('.')
+
+    return `^${major}.${minor}`
+}
+
 const manifest = {
     schema: 1,
     solution: 'hello',
-    kit: '^0.1',
-    vue: '^3.5',
-    inertia: '^3.0',
+    kit: builtAgainst('@fapost/ui'),
+    vue: builtAgainst('vue'),
+    inertia: builtAgainst('@inertiajs/vue3'),
     pages: { Home: only(/^home-.+\.js$/) },
 }
 
