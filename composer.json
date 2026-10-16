@@ -1,0 +1,39 @@
+{
+  "name": "fapost/solution-hello-world",
+  "description": "The smallest working FaPost Solution: one action for the call node and one console page",
+  "type": "fapost-solution",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/fapost-lab/solution-hello-world",
+  "support": {
+    "issues": "https://github.com/fapost-lab/solution-hello-world/issues",
+    "source": "https://github.com/fapost-lab/solution-hello-world"
+  },
+  "require": {
+    "php": "^8.4",
+    "fapost/foundation": ">=0.19 <1.0",
+    "illuminate/support": "^12.0",
+    "inertiajs/inertia-laravel": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Fapost\\HelloWorld\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Fapost\\HelloWorld\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "fapost": {
+      "schema": 1,
+      "id": "hello",
+      "name": "Hello World",
+      "description": "The smallest working Solution: a greeting action and one console page.",
+      "provider": "Fapost\\HelloWorld\\HelloWorldServiceProvider",
+      "actions": ["hello.greet"],
+      "ui": "dist/fapost-ui.json"
+    }
+  },
+  "minimum-stability": "stable"
+}
