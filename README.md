@@ -90,7 +90,9 @@ npm run build
 
 `npm run build` runs Vite in library mode (`vite.config.js`), keeping `vue`, `@inertiajs/vue3` and `@fapost/ui`
 external because the console supplies them, and then writes `dist/fapost-ui.json` (`scripts/write-manifest.mjs`).
-Commit the result; CI rebuilds it and fails if it differs from the committed files.
+All three are pinned in `package.json` at the versions Core ships, so imports resolve against the real kit; the
+`kit`, `vue` and `inertia` ranges in `fapost-ui.json` come from those installed versions, and Core refuses to
+activate the Solution when its own versions fall outside them. Commit the result; CI rebuilds it and fails if it differs from the committed files.
 
 > This hand-rolled Vite configuration and manifest script are temporary. The Vite preset
 > `@fapost/vite-plugin-solution` will replace them.

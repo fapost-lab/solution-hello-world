@@ -7,6 +7,8 @@
         "build": "vite build && node scripts/write-manifest.mjs"
     },
     "devDependencies": {
+        "@fapost/ui": "0.1.0",
+        "@inertiajs/vue3": "3.7.1",
         "@vitejs/plugin-vue": "6.0.9",
         "vite": "8.3.0",
         "vue": "3.5.43"
