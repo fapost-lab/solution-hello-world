@@ -33,27 +33,12 @@ jobs:
     outputs:
       tag: ${{ steps.latest.outputs.tag }}
       refs: ${{ steps.latest.outputs.refs }}
-      has_token: ${{ steps.auth.outputs.present }}
 
     steps:
-      # Fork pull requests never get secrets. Without the token Core cannot be checked out:
-      # the package job says so and is skipped (a maintainer checks such a pull request) instead of failing.
-      - name: Check for the Core read token
-        id: auth
-        env:
-          CORE_READ_TOKEN: ${{ secrets.CORE_READ_TOKEN }}
-        run: |
-          if [ -n "$CORE_READ_TOKEN" ]; then
-              echo "present=true" >> "$GITHUB_OUTPUT"
-          else
-              echo "::notice::CORE_READ_TOKEN is not available (a fork pull request?): the package job is skipped."
-              echo "present=false" >> "$GITHUB_OUTPUT"
-          fi
-
+      # Core is public, so the token every run gets is enough, in a fork's pull request too.
       - id: latest
-        if: steps.auth.outputs.present == 'true'
         env:
-          GH_TOKEN: ${{ secrets.CORE_READ_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           tag="$(gh api repos/fapost-lab/core/releases/latest --jq .tag_name)"
           test -n "$tag"
@@ -63,7 +48,6 @@ jobs:
   package:
     name: Package (Core ${{ matrix.core_ref }})
     needs: core-release
-    if: needs.core-release.outputs.has_token == 'true'
     runs-on: ubuntu-latest
 
     strategy:
@@ -74,19 +58,13 @@ jobs:
 
     steps:
       # Core is the host application; the package has nothing to boot without it.
-      # It is checked out at `main` and at the latest release (the matrix).
-      # The repository is private until Core's first stable version, and the
-      # GITHUB_TOKEN of this repository cannot read another one, hence a token
-      # of its own (fine-grained, read-only on fapost-lab/core). It goes away
-      # when Core becomes public.
+      # It is checked out at `main` and at the latest release (the matrix);
+      # Core is public, so no token of its own is needed.
       - name: Check out Core
         uses: actions/checkout@v7
         with:
           repository: fapost-lab/core
           ref: ${{ matrix.core_ref }}
-          token: ${{ secrets.CORE_READ_TOKEN }}
-          # The token is needed for this checkout only; do not leave it in
-          # .git/config next to Composer plugins.
           persist-credentials: false
           path: core
 

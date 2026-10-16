@@ -111,8 +111,8 @@ Code style: `../../vendor/bin/pint --config pint.json src tests lang`.
 ## Contributing
 
 Contributions are licensed under Apache-2.0 and need the Contributor Licence Agreement, which a bot asks you to
-sign on your first pull request. Core is private for now, so the tests (and CI) need access to
-`fapost-lab/core`: pull requests from forks are checked by a maintainer until Core is public.
+sign on your first pull request. CI checks out the public `fapost-lab/core` and runs the tests
+inside it, in pull requests from forks too; nothing needs to be configured.
 
 ## License
 
