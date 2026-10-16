@@ -16,7 +16,8 @@ Docs: [Solutions](https://docs.fapost.in/extending/solutions) and
 | One console page, `hello::Home`, written as a Vue single-file component | `resources/js/pages/Home.vue`, `src/HelloWorldController.php` |
 | The prebuilt bundle Core publishes and the browser loads, with the declaration `fapost-ui.json` | `dist/` |
 
-`src/` never imports `App\…`: it depends on `fapost/foundation` only. The integration tests in `tests/` do, because Foundation has no testing kit for Solutions yet.
+Nothing here imports `App\…`: `src/` depends on `fapost/foundation` only, and the integration tests in `tests/` use Core's
+[Solution testing kit](https://docs.fapost.in/extending/testing) (`Fapost\Testing\SolutionTestCase`) and Foundation.
 
 ## Install into a Core checkout
 
@@ -99,8 +100,8 @@ activate the Solution when its own versions fall outside them. Commit the result
 
 ## Run the tests
 
-The tests boot Core's real application with this package installed, so run them inside a Core checkout
-that has the package installed as above:
+The tests boot Core's real application with this package installed, through Core's testing kit, so run them
+inside a Core checkout that has the package installed as above (a Core release that ships the kit):
 
 ```bash
 php artisan config:clear
