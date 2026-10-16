@@ -1,0 +1,10 @@
+{
+    "schema": 1,
+    "solution": "hello",
+    "kit": "^0.1",
+    "vue": "^3.5",
+    "inertia": "^3.0",
+    "pages": {
+        "Home": "assets/home-S2ycyEKy.js"
+    }
+}

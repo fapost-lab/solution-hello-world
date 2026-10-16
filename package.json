@@ -1,0 +1,14 @@
+{
+    "name": "@fapost/solution-hello-world-ui",
+    "private": true,
+    "type": "module",
+    "description": "Builds the prebuilt console UI bundle (dist/) of the Hello World Solution",
+    "scripts": {
+        "build": "vite build && node scripts/write-manifest.mjs"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "6.0.9",
+        "vite": "8.3.0",
+        "vue": "3.5.43"
+    }
+}
