@@ -11,7 +11,7 @@
   "require": {
     "php": "^8.4",
     "fapost/foundation": ">=0.19 <1.0",
-    "illuminate/support": "^12.0",
+    "illuminate/support": "^12.0 || ^13.0",
     "inertiajs/inertia-laravel": "^3.0"
   },
   "autoload": {
