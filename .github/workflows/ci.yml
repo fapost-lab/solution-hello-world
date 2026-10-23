@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PHP_VERSION: "8.4"
+  PHP_VERSION: "8.5"
   # The same set Core's CI installs (see its .github/workflows/ci.yml).
   PHP_EXTENSIONS: pdo_pgsql, pdo_sqlite, intl, bcmath, zip, gd, pcntl, sockets, redis
 
